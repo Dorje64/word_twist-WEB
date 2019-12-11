@@ -1,40 +1,101 @@
 import React, { Component, Fragment } from 'react';
 import Board from '../../components/Board';
 import Stats from '../../components/Stats';
-import './style.scss'
+import './style.scss';
+import { ValidWord } from '../../Api';
 
+
+const alphabatesMain = 'abcdefghijklmnopqrstuvwxyz'.split('');
 export default class Game extends Component {
   constructor(props){
     super(props)
     this.state = {
-      word: ''
+      word: '',
+      perRow: 4,
+      alphabates: [[]],
+      clickedItems: []
     }
   }
 
-  componentDidMount(){
-
+  componentWillMount(){
+    this.generateContent()
   }
-  getLetter = letter => {
-    console.log(letter)
+
+  generateContent = () => {
+    const alphabates = [];
+    const {perRow} = this.state;
+    for(let i = 0; i < perRow; i++){
+      const rowData = []
+      for(let j = 0; j < perRow; j++){
+        rowData.push(alphabatesMain.random())
+      }
+      alphabates.push(rowData)
+    }
+
+    this.setState({ alphabates: alphabates })
+  }
+
+  getLetter = (letter, cordinate) => {
+    const {word, clickedItems} = this.state;
+    clickedItems.push(cordinate);
+    const newWord = word + letter;
+    this.setState({word: newWord, clickedItems: clickedItems})
+  }
+
+  submit = _ => {
+    const { word } = this.state;
+    // ValidWord(word)
+    //   .then( res=>{
+    //     //Fill the bucket
+
+    //   }).catch( error=> {        
+        
+      // })
+      this.setState({ word: '', clickedItems: [] }, _ => {
+        console.log(this.state.word +' +  '+ this.state.clickedItems)
+      })
+      
   }
 
   render(){
-    return <div className="row">
+    const { word, alphabates, clickedItems } = this.state;
+    const wordLength = word.length;
+    return (
+    <div className="row">
       <div className="col bg-info full-height  pt-5">
-        <div className="board-wrapper mx-auto">
-        <Board 
-          perRow = {4}
-          borderColor = 'abc'
-          borderWidth = '2px'
-          getLetter = {this.getLetter}
-        />
+        <div className="row">
+          <div className="col">
+          <div className="board-wrapper mx-auto">
+            <Board 
+              perRow = {4}
+              borderColor = 'abc'
+              borderWidth = '2px'
+              getLetter = {this.getLetter }
+              alphabates = {alphabates}
+              clickedItems = {clickedItems}
+            />
+          </div>
+          </div>
+        </div>
+        <div className="row">
+        <div className="col">
+        <div className="word-wrapper">
+          <button className={`word ${WordButton(wordLength)}`} onClick={this.submit}> 
+            {word.toUpperCase() || '"__"' }
+          </button>
+        </div>
+        </div>
         </div>
       </div>
       <div className="col bg-success full-height">
           <Stats />
       </div>
-    </div>
+    </div>);
   }
-
 }
 
+
+//style-js
+export const WordButton = (wordLength) => {
+  return wordLength > 2 ? "btn btn-success btn-lg" : "btn btn-danger btn-lg"
+}
