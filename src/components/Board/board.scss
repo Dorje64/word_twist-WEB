@@ -3,6 +3,8 @@
    position: relative;
    width: 100%;
    border-style: groove;
+   // background-color: ;
+   cursor: pointer;
 }
 
 .square:after {
@@ -15,6 +17,13 @@
    position: absolute;
    width: 100%;
    height: 100%;
-   // font-family: fantasy;
+   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+   line-height: 8vw;
+   font-size: 5vw;
    // font-size: 0vmax  ;
 }
+
+.avoid-clicks {
+   pointer-events: none;
+   background: darkslategray;
+ }
