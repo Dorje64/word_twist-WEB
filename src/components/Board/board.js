@@ -8,35 +8,39 @@ export default class Board extends Component {
     this.state = {
       perRow: this.props.perRow || 4,
       borderColor: this.props.borderColor || 'coral',
-      borderWidth: this.props.borderWith || '4px', 
+      borderWidth: this.props.borderWith || '4px',
+      alphabates: this.props.alphabates,
+      clickedItems: this.props.clickedItems
     }
   }
 
-  generateRow = (col) => {
-    const { perRow } = this.state; 
-    const {borderColor, borderWidth} = this.state;
+  generateRow = (col, letterArray) => {
+  
+    const {perRow, borderColor, borderWidth, clickedItems} = this.state;
     const Rows = [];
 
     for( let i = 0; i < perRow; i++){
-      const letter = alphabates.random();
+      const letter = letterArray[i];
+      const cordinate = `${col}-${i}`
       // this.setState({table[col][i]:letter })
-      Rows.push(<div className="square" 
-                style={{borderColor: borderColor, borderWidth: borderWidth }} 
-                key={`${col}-${i}`}
-                onClick={_ => { this.props.getLetter(letter) }}
+      Rows.push(<div
+                  className={"square " + AvoidClick(cordinate, clickedItems) }  
+                  style={{borderColor: borderColor, borderWidth: borderWidth }} 
+                  key={`${col}-${i}`}
+                  onClick={_ => { this.props.getLetter(letter, cordinate) }}
                 >
-        <div className="content">  {letter} </div> 
-      </div>)
+                  <div className="content">  {letter.toUpperCase()} </div> 
+                </div>)
     }
     return Rows;
   }
 
   render(){
-    const { perRow } = this.state;
+    const { perRow, alphabates } = this.state;
     const Columns = []
 
     for (let index = 0; index < perRow; index++) {
-      Columns.push(<div className="d-flex d-row" key={index}> { this.generateRow(index)} </div>)
+      Columns.push(<div className="d-flex d-row" key={index}> { this.generateRow(index, alphabates[index])} </div>)
     }
     
     return(
@@ -49,6 +53,15 @@ export default class Board extends Component {
   }
 }
 
+
 Array.prototype.random = function () {
   return this[Math.floor((Math.random()*this.length))];
+}
+
+//Style.js
+
+export const AvoidClick = (cordinate, clickedItems) => {
+  // const {clickedItems} = this.state;
+  // console.log(clickedItems.includes(cordinate))
+  return clickedItems.includes(cordinate) ? 'avoid-clicks text-muted' : 'text-light';
 }
