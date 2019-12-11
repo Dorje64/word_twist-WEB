@@ -11,3 +11,12 @@ body{
     width: 65%;
  }
  
+ .word-wrapper {
+    justify-content: flex-center;
+    margin-top: 2rem;
+    .word{
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        line-height: 8vw;
+        font-size: 5vw;
+    }
+ }
