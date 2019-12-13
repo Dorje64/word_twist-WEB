@@ -13,7 +13,10 @@ export default class Game extends Component {
       word: '',
       perRow: 4,
       alphabates: [[]],
-      clickedItems: []
+      clickedItems: [],
+      correctsWords: [],
+      inCorrentWords: [],
+      score: 265
     }
   }
 
@@ -44,13 +47,14 @@ export default class Game extends Component {
 
   submit = _ => {
     const { word } = this.state;
-    // ValidWord(word)
-    //   .then( res=>{
-    //     //Fill the bucket
+    ValidWord(word)
+      .then( res => {
+        //Fill the bucket
+        debugger;
 
-    //   }).catch( error=> {        
-        
-      // })
+      }).catch( error => {        
+        debugger;
+      })
       this.setState({ word: '', clickedItems: [] }, _ => {
         console.log(this.state.word +' +  '+ this.state.clickedItems)
       })
@@ -72,7 +76,7 @@ export default class Game extends Component {
               borderWidth = '2px'
               getLetter = {this.getLetter }
               alphabates = {alphabates}
-              clickedItems = {clickedItems}
+              disabledItems = {clickedItems}
             />
           </div>
           </div>
