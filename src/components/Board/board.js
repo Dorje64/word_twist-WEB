@@ -10,21 +10,31 @@ export default class Board extends Component {
       borderColor: this.props.borderColor || 'coral',
       borderWidth: this.props.borderWith || '4px',
       alphabates: this.props.alphabates,
-      clickedItems: this.props.clickedItems
+      disabledItems: this.props.disabledItems
+    }
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    // debugger;
+    if (nextProps.disabledItems !== prevState.disabledItems) {
+      return ({ disabledItems: nextProps.disabledItems }) // <- this is setState equivalent
     }
   }
 
   generateRow = (col, letterArray) => {
   
-    const {perRow, borderColor, borderWidth, clickedItems} = this.state;
+    const {perRow, borderColor, borderWidth, disabledItems} = this.state;
     const Rows = [];
+    // if(disabledItems == []){
+      // debugger
+    // }
 
     for( let i = 0; i < perRow; i++){
       const letter = letterArray[i];
       const cordinate = `${col}-${i}`
       // this.setState({table[col][i]:letter })
       Rows.push(<div
-                  className={"square " + AvoidClick(cordinate, clickedItems) }  
+                  className={"square " + AvoidClick(cordinate, disabledItems) }  
                   style={{borderColor: borderColor, borderWidth: borderWidth }} 
                   key={`${col}-${i}`}
                   onClick={_ => { this.props.getLetter(letter, cordinate) }}
@@ -60,8 +70,8 @@ Array.prototype.random = function () {
 
 //Style.js
 
-export const AvoidClick = (cordinate, clickedItems) => {
-  // const {clickedItems} = this.state;
-  // console.log(clickedItems.includes(cordinate))
-  return clickedItems.includes(cordinate) ? 'avoid-clicks text-muted' : 'text-light';
+export const AvoidClick = (cordinate, disabledItems) => {
+  // const {disabledItems} = this.state;
+  // console.log(disabledItems.includes(cordinate))
+  return disabledItems.includes(cordinate) ? 'avoid-clicks text-muted' : 'text-light';
 }
