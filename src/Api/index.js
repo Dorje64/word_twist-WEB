@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-const API = Axios.create({ baseURL: 'http://relocalhost:3000/' })
+const API = Axios.create({ baseURL: 'http://localhost:3000/' })
 
 export const ValidWord = (word) => {
 
