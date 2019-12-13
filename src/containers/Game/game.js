@@ -47,23 +47,33 @@ export default class Game extends Component {
 
   submit = _ => {
     const { word } = this.state;
+    let {correctsWords, inCorrentWords} = this.state;
     ValidWord(word)
       .then( res => {
         //Fill the bucket
-        debugger;
+        if(res.data.match){
+          // eslint-disable-next-line no-undef
+          correctsWords.push(res.data.word)          
+        }else{
+          // eslint-disable-next-line no-undef
+          inCorrentWords.push(res.data.word)
+        }
+        this.setState({ correctsWords: correctsWords, inCorrentWords: inCorrentWords});
+        this.setState({ word: '', clickedItems: [] }, _ => {
+          console.log(this.state.word +' +  '+ this.state.clickedItems)
+        })
 
       }).catch( error => {        
-        debugger;
+        alert('network error')
       })
-      this.setState({ word: '', clickedItems: [] }, _ => {
-        console.log(this.state.word +' +  '+ this.state.clickedItems)
-      })
-      
+
+     
   }
 
   render(){
-    const { word, alphabates, clickedItems } = this.state;
+    const { word, alphabates, clickedItems, correctsWords, inCorrentWords } = this.state;
     const wordLength = word.length;
+    
     return (
     <div className="row">
       <div className="col bg-info full-height  pt-5">
@@ -92,7 +102,14 @@ export default class Game extends Component {
         </div>
       </div>
       <div className="col bg-success full-height">
-          <Stats />
+        <div className="row">
+          <div className="col flex-column">
+          { correctsWords.map(word => <div className="word" key={word}> {word} </div>) }
+          </div>
+          <div className="col">
+          { inCorrentWords.map(word => <div className="word" key={word}> {word} </div>) }
+          </div>
+        </div>
       </div>
     </div>);
   }
