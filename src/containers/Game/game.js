@@ -14,8 +14,8 @@ export default class Game extends Component {
       perRow: 4,
       alphabates: [[]],
       clickedItems: [],
-      correctsWords: ['good', 'bad', 'hater'],
-      inCorrentWords: ['nwe', 'xxxxxx', 'zzwweeod'],
+      correctsWords: [],
+      inCorrentWords: [],
       score: 265
     }
   }
@@ -103,7 +103,7 @@ export default class Game extends Component {
         </div>
         </div>
       </div>
-      <div className="col bg-success full-height d-flex flex-row justify-content-around">
+      <div className="col order-1st bg-success full-height d-flex flex-row justify-content-around">
        <Stats inCorrentWords={inCorrentWords} correctsWords={correctsWords}/>
       </div>
     </div>);
