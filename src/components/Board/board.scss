@@ -27,3 +27,11 @@
    pointer-events: none;
    background: darkslategray;
  }
+
+ @media only screen and (max-width: 700px) {
+   .content{
+       font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+       line-height: 15vw;
+       font-size: 10vw;
+   }
+}
