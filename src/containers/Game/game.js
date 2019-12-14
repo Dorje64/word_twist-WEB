@@ -14,8 +14,8 @@ export default class Game extends Component {
       perRow: 4,
       alphabates: [[]],
       clickedItems: [],
-      correctsWords: [],
-      inCorrentWords: [],
+      correctsWords: ['good', 'bad', 'hater'],
+      inCorrentWords: ['nwe', 'xxxxxx', 'zzwweeod'],
       score: 265
     }
   }
@@ -66,9 +66,11 @@ export default class Game extends Component {
       }).catch( error => {        
         alert('network error')
       })
-
      
   }
+
+  //This word are correct but not in file
+  //june
 
   render(){
     const { word, alphabates, clickedItems, correctsWords, inCorrentWords } = this.state;
@@ -94,27 +96,19 @@ export default class Game extends Component {
         <div className="row">
         <div className="col">
         <div className="word-wrapper">
-          <button className={`word ${WordButton(wordLength)}`} onClick={this.submit}> 
+          <button className={`word-board ${WordButton(wordLength)}`} onClick={this.submit}> 
             {word.toUpperCase() || '"__"' }
           </button>
         </div>
         </div>
         </div>
       </div>
-      <div className="col bg-success full-height">
-        <div className="row">
-          <div className="col flex-column">
-          { correctsWords.map(word => <div className="word" key={word}> {word} </div>) }
-          </div>
-          <div className="col">
-          { inCorrentWords.map(word => <div className="word" key={word}> {word} </div>) }
-          </div>
-        </div>
+      <div className="col bg-success full-height d-flex flex-row justify-content-around">
+       <Stats inCorrentWords={inCorrentWords} correctsWords={correctsWords}/>
       </div>
     </div>);
   }
 }
-
 
 //style-js
 export const WordButton = (wordLength) => {
