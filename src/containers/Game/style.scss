@@ -14,9 +14,23 @@ body{
  .word-wrapper {
     justify-content: flex-center;
     margin-top: 2rem;
-    .word{
+
+    .word-board{
         font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
         line-height: 8vw;
         font-size: 5vw;
     }
+
+    .word-result {
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        line-height: 2rem;
+        font-size: 2rem;
+    }
+ }
+
+ .results{
+    position: absolute;
+    align-content: flex-end;
+    // width: 50%;
+    bottom: 10px;
  }
