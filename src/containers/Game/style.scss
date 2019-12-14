@@ -34,3 +34,20 @@ body{
     // width: 50%;
     bottom: 10px;
  }
+
+ @media only screen and (max-width: 700px) {
+    .word-board{
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        line-height: 8vw;
+        font-size: 5vw;
+    }
+
+    .full-height{
+        height: auto;
+        order: 1;
+    }
+
+    .order-1st {
+        order: -1;
+    }
+ }
