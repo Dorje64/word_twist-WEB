@@ -2,7 +2,9 @@ import React, { Component, Fragment } from 'react';
 import Board from '../../components/Board';
 import Stats from '../../components/Stats';
 import './style.scss';
+import Countdown from '../../components/Countdown';
 import { ValidWord } from '../../Api';
+import moment from 'moment';
 
 
 const alphabatesMain = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -47,6 +49,9 @@ export default class Game extends Component {
 
   submit = _ => {
     const { word } = this.state;
+    if(word.length < 3){
+      return 
+    }
     let {correctsWords, inCorrentWords} = this.state;
     ValidWord(word)
       .then( res => {
@@ -70,15 +75,15 @@ export default class Game extends Component {
   }
 
   //This word are correct but not in file
-  //june
+  //month name
 
   render(){
-    const { word, alphabates, clickedItems, correctsWords, inCorrentWords } = this.state;
+    const { word, alphabates, clickedItems, correctsWords, inCorrentWords, score } = this.state;
     const wordLength = word.length;
     
     return (
     <div className="row">
-      <div className="col bg-info full-height  pt-5">
+      <div className="col bg-info  pt-5">
         <div className="row">
           <div className="col">
           <div className="board-wrapper mx-auto">
@@ -103,8 +108,26 @@ export default class Game extends Component {
         </div>
         </div>
       </div>
-      <div className="col order-1st bg-success full-height d-flex flex-row justify-content-around">
-       <Stats inCorrentWords={inCorrentWords} correctsWords={correctsWords}/>
+      <div className="col order-1st bg-success">
+        <div className="row">
+          
+          <div className="col-12">
+            <Countdown timeTillDate={moment().add(3,'minutes').toDate().getTime()} timeFormat="" />
+          </div>
+
+          <div className="col-12">
+            <span className="score text-bold text-danger">
+              <span> {score} </span>
+              <span className="text-white label">[pt]</span>
+              
+            </span>  
+          </div>
+          <div className="col-12">
+          <div className="float-down d-flex flex-row justify-content-around">
+            <Stats inCorrentWords={inCorrentWords} correctsWords={correctsWords} score={score}/>
+          </div>
+          </div>
+        </div>
       </div>
     </div>);
   }
