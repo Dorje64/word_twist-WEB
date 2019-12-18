@@ -1,10 +1,8 @@
 body{
     overflow: hidden;
+    min-height: 100%;
 }
 
-.full-height{
-    height: 100vh;
-}
 
 .board-wrapper {  
     height: 65%;
@@ -49,5 +47,27 @@ body{
 
     .order-1st {
         order: -1;
+        height: 30vh;
     }
+
+    .word-stack{
+        // position: absolute;
+    visibility:hidden;
+       display: none !important;
+    }
+ }
+
+
+ .float-down{
+    // position: absolute;
+    bottom: 0 !important;
+ }
+
+ .score{
+     font-size: 80px;
+     font-family: fantasy;
+     font-weight: bolder;
+     .label {
+        font-size: 20px;
+     }
  }
