@@ -6,7 +6,7 @@ export default class Stats extends Component {
   //   super(props)
   //   this.state = {
   //     correctsWords: this.props.correctsWords,
-  //     inCorrentWords: this.props.inCorrentWords
+  //     inCorrectWords: this.props.inCorrectWords
   //   }
   // }
 
@@ -15,7 +15,7 @@ export default class Stats extends Component {
   // }
 
   render(){
-    const { correctsWords, inCorrentWords } = this.props; 
+    const { correctsWords, inCorrectWords } = this.props; 
     return (
       <Fragment>
          
@@ -25,7 +25,7 @@ export default class Stats extends Component {
             </div>
               
             <div className= "list-group d-flex flex-column-reverse word-stack">
-              { inCorrentWords.map(word => Word(word, 'danger')) }
+              { inCorrectWords.map(word => Word(word, 'danger')) }
               <h4 className="text-light">Incorrect Stack</h4>
             </div>
          
