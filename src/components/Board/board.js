@@ -25,9 +25,6 @@ export default class Board extends Component {
   
     const {perRow, borderColor, borderWidth, disabledItems} = this.state;
     const Rows = [];
-    // if(disabledItems == []){
-      // debugger
-    // }
 
     for( let i = 0; i < perRow; i++){
       const letter = letterArray[i];
