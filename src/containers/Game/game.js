@@ -17,13 +17,22 @@ export default class Game extends Component {
       alphabates: [[]],
       clickedItems: [],
       correctsWords: [],
-      inCorrentWords: [],
-      score: 265
+      inCorrectWords: [],
+      score: 0
     }
   }
 
   componentWillMount(){
     this.generateContent()
+  }
+
+  validate = word => {
+    const { correctsWords, inCorrectWords } = this.state;
+    const isExist = [ ...correctsWords, ...inCorrectWords ].includes(word)
+    if(word.length < 3 || isExist ){
+      return false
+    }
+    return true
   }
 
   generateContent = () => {
@@ -49,24 +58,24 @@ export default class Game extends Component {
 
   submit = _ => {
     const { word } = this.state;
-    if(word.length < 3){
-      return 
-    }
-    let {correctsWords, inCorrentWords} = this.state;
+    if(this.validate(word) === false){
+      this.setState({ word: '', clickedItems: [] })
+      return;
+    } 
+    let {correctsWords, inCorrectWords, score} = this.state;
     ValidWord(word)
       .then( res => {
         //Fill the bucket
         if(res.data.match){
           // eslint-disable-next-line no-undef
-          correctsWords.push(res.data.word)          
+          correctsWords.push(res.data.word)  
+          this.updateSocre(res.data.word, score)      
         }else{
           // eslint-disable-next-line no-undef
-          inCorrentWords.push(res.data.word)
+          inCorrectWords.push(res.data.word)
         }
-        this.setState({ correctsWords: correctsWords, inCorrentWords: inCorrentWords});
-        this.setState({ word: '', clickedItems: [] }, _ => {
-          console.log(this.state.word +' +  '+ this.state.clickedItems)
-        })
+        this.setState({ correctsWords: correctsWords, inCorrectWords: inCorrectWords});
+        this.setState({ word: '', clickedItems: [] })
 
       }).catch( error => {        
         alert('network error')
@@ -74,11 +83,16 @@ export default class Game extends Component {
      
   }
 
+  updateSocre = (word, score) => {
+    const newScore = score + word.length * 10;
+    this.setState({ score: newScore })
+  }
+
   //This word are correct but not in file
   //month name
 
   render(){
-    const { word, alphabates, clickedItems, correctsWords, inCorrentWords, score } = this.state;
+    const { word, alphabates, clickedItems, correctsWords, inCorrectWords, score } = this.state;
     const wordLength = word.length;
     
     return (
@@ -124,7 +138,7 @@ export default class Game extends Component {
           </div>
           <div className="col-12">
           <div className="float-down d-flex flex-row justify-content-around">
-            <Stats inCorrentWords={inCorrentWords} correctsWords={correctsWords} score={score}/>
+            <Stats inCorrectWords={inCorrectWords} correctsWords={correctsWords} score={score}/>
           </div>
           </div>
         </div>
