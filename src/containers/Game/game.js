@@ -18,7 +18,10 @@ export default class Game extends Component {
       clickedItems: [],
       correctsWords: [],
       inCorrectWords: [],
-      score: 0
+      score: 0,
+      endTime: moment().add(2,'minutes').toDate().getTime(),
+      gameOver: false,
+      loading: false
     }
   }
 
@@ -57,7 +60,12 @@ export default class Game extends Component {
   }
 
   submit = _ => {
-    const { word } = this.state;
+    this.setState({ loading: true})
+    const { word, gameOver, loading} = this.state;
+    
+    if(gameOver || loading)
+      return;
+
     if(this.validate(word) === false){
       this.setState({ word: '', clickedItems: [] })
       return;
@@ -69,10 +77,12 @@ export default class Game extends Component {
         if(res.data.match){
           // eslint-disable-next-line no-undef
           correctsWords.push(res.data.word)  
-          this.updateSocre(res.data.word, score)      
+          this.updateSocre(res.data.word, score)
+          this.setState({ loading: false})      
         }else{
           // eslint-disable-next-line no-undef
           inCorrectWords.push(res.data.word)
+          this.setState({ loading: false})
         }
         this.setState({ correctsWords: correctsWords, inCorrectWords: inCorrectWords});
         this.setState({ word: '', clickedItems: [] })
@@ -88,11 +98,15 @@ export default class Game extends Component {
     this.setState({ score: newScore })
   }
 
+  gameOver = _ => {
+    this.setState({gameOver: true})
+  }
+
   //This word are correct but not in file
   //month name
 
   render(){
-    const { word, alphabates, clickedItems, correctsWords, inCorrectWords, score } = this.state;
+    const { word, alphabates, clickedItems, correctsWords, inCorrectWords, score, endTime, gameOver } = this.state;
     const wordLength = word.length;
     
     return (
@@ -126,19 +140,24 @@ export default class Game extends Component {
         <div className="row">
           
           <div className="col-12">
-            <Countdown timeTillDate={moment().add(3,'minutes').toDate().getTime()} timeFormat="" />
+            {gameOver && 
+              <span className="score text-bold text-danger">
+              <span> Game Over </span>
+              </span>
+            }
+            {gameOver || 
+            <Countdown timeTillDate={endTime} on  gameOver={ this.gameOver }/>}
           </div>
 
           <div className="col-12">
             <span className="score text-bold text-danger">
               <span> {score} </span>
               <span className="text-white label">[pt]</span>
-              
             </span>  
           </div>
           <div className="col-12">
           <div className="float-down d-flex flex-row justify-content-around">
-            <Stats inCorrectWords={inCorrectWords} correctsWords={correctsWords} score={score}/>
+            <Stats inCorrectWords={inCorrectWords} correctsWords={correctsWords} score={score} />
           </div>
           </div>
         </div>
