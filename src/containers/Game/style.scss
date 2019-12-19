@@ -1,0 +1,73 @@
+body{
+    overflow: hidden;
+    min-height: 100%;
+}
+
+
+.board-wrapper {  
+    height: 65%;
+    width: 65%;
+ }
+ 
+ .word-wrapper {
+    justify-content: flex-center;
+    margin-top: 2rem;
+
+    .word-board{
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        line-height: 8vw;
+        font-size: 5vw;
+    }
+
+    .word-result {
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        line-height: 2rem;
+        font-size: 2rem;
+    }
+ }
+
+ .results{
+    position: absolute;
+    align-content: flex-end;
+    // width: 50%;
+    bottom: 10px;
+ }
+
+ @media only screen and (max-width: 700px) {
+    .word-board{
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        line-height: 8vw;
+        font-size: 5vw;
+    }
+
+    .full-height{
+        height: auto;
+        order: 1;
+    }
+
+    .order-1st {
+        order: -1;
+        height: 30vh;
+    }
+
+    .word-stack{
+        // position: absolute;
+    visibility:hidden;
+       display: none !important;
+    }
+ }
+
+
+ .float-down{
+    // position: absolute;
+    bottom: 0 !important;
+ }
+
+ .score{
+     font-size: 80px;
+     font-family: fantasy;
+     font-weight: bolder;
+     .label {
+        font-size: 20px;
+     }
+ }
