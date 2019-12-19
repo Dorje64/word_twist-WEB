@@ -34,8 +34,10 @@ export default class Stats extends Component {
   }
 }
 
-const Word = (word,style) => <li className={"list-group-item list-group-item-" + style} key={word}> 
-                          {word}
-                          <span className={`badge badge-${style} badge-pill float-right`}>{word.length}</span>
-                        </li>
-                       
+const Word = (word,style) => (
+                              <li className={"list-group-item list-group-item-" + style} key={word}> 
+                                {word.toUpperCase()}
+                                <span className={`badge badge-${style} badge-pill float-right`}>{word.length}</span>
+                              </li>
+                            )
+                            

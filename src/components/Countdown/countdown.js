@@ -23,6 +23,11 @@ export default class Countdown extends React.Component {
             const seconds = countdown.format('ss');
 
             this.setState({ days, hours, minutes, seconds });
+            console.log(countdown)
+            if(countdown < 0) {
+                clearInterval(this.interval);
+                this.props.gameOver()
+            }
         }, 1000);
     }
 
@@ -50,7 +55,7 @@ export default class Countdown extends React.Component {
                 <div className="countdown-wrapper">
                     {minutes && (
                         <div className="countdown-item">
-                            {minutes}
+                            {minutes-30}
                             <span className="text-light">minutes</span>
                         </div>
                     )}
